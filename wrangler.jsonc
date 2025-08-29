@@ -7,10 +7,19 @@
 	"name": "mi-worker",
 	"main": "src/index.js",
 	"compatibility_date": "2025-08-29",
-	"compatibility_flags": [
-		"nodejs_compat",
-		"global_fetch_strictly_public"
+	"kv_namespaces": [
+		{
+			"binding": "CELLS_KV",
+			"id": "6e2de5ab05484e718623457c7e68d6c7"
+		}
 	],
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET", // cómo lo vas a usar en tu Worker
+			"bucket_name": "imagenes" // nombre del bucket que creaste en R2
+		}
+	],
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
 	"assets": {
 		// The path to the directory containing the `index.html` file to be served at `/`
 		"directory": "./public"

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -8,24 +8,28 @@
 	<body>
 		<h1 id="heading"></h1>
 		<p>This page comes from a static asset stored at `public/index.html` as configured in `wrangler.jsonc`.</p>
-		<button id="button" type="button">Fetch a random UUID</button>
+		<input type="file" id="img" />
+		<button id="button" type="button">Enviar imagen</button>
 		<output id="random" for="button"></output>
 		<script>
-			fetch('/message')
-				.then((resp) => resp.text())
-				.then((text) => {
-					const h1 = document.getElementById('heading');
-					h1.textContent = text;
+			const img = document.getElementById('img');
+			const button = document.getElementById('button');
+
+			button.addEventListener('click', async () => {
+				const file = img.files[0];
+				if (!file) return alert('Selecciona un archivo');
+
+				const formData = new FormData();
+				formData.append('image', file);
+
+				const resp = await fetch('/createImg', {
+					method: 'POST',
+					body: formData,
 				});
 
-			const button = document.getElementById("button");
-			button.addEventListener("click", () => {
-				fetch('/random')
-					.then((resp) => resp.text())
-					.then((text) => {
-						const random = document.getElementById('random');
-						random.textContent = text;
-					});
+				const text = await resp.text();
+				const random = document.getElementById('random');
+				random.textContent = text;
 			});
 		</script>
 	</body>
